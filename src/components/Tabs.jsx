@@ -1,29 +1,33 @@
-import React, { useState } from 'react';
+import React from "react";
 
-export default function Tabs({ data }) {
-  const [tab, setTab] = useState('stats');
+export default function Tabs({ activeTab, onTabChange }) {
+  const tabs = [
+    { key: "price", label: "APT Price" },
+    { key: "tvl", label: "TVL" },
+    { key: "chain", label: "Chain Activity" },
+    { key: "ecosystem", label: "Projects" },
+    { key: "twitter", label: "Twitter" },
+  ];
 
   return (
-    <div>
-      {/* Tab Buttons */}
-      <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', cursor: 'pointer' }}>
-        <div onClick={() => setTab('stats')} style={{ fontWeight: tab === 'stats' ? 'bold' : 'normal' }}>Stats</div>
-        <div onClick={() => setTab('volume')} style={{ fontWeight: tab === 'volume' ? 'bold' : 'normal' }}>Volume</div>
-        <div onClick={() => setTab('market')} style={{ fontWeight: tab === 'market' ? 'bold' : 'normal' }}>Market Cap</div>
-      </div>
-
-      {/* Tab Content */}
-      <div style={{ marginTop: '20px' }}>
-        {tab === 'stats' && data && (
-          <p>Current Price: ${data.market_data.current_price.usd}</p>
-        )}
-        {tab === 'volume' && data && (
-          <p>24h Volume: ${data.market_data.total_volume.usd}</p>
-        )}
-        {tab === 'market' && data && (
-          <p>Market Cap: ${data.market_data.market_cap.usd}</p>
-        )}
-      </div>
+    <div style={{ display: "flex", justifyContent: "center", margin: "20px 0" }}>
+      {tabs.map(tab => (
+        <button
+          key={tab.key}
+          onClick={() => onTabChange(tab.key)}
+          style={{
+            margin: "0 5px",
+            padding: "10px 20px",
+            borderRadius: "6px",
+            border: activeTab === tab.key ? "2px solid #0070f3" : "1px solid #ccc",
+            background: activeTab === tab.key ? "#0070f3" : "#fff",
+            color: activeTab === tab.key ? "#fff" : "#333",
+            cursor: "pointer"
+          }}
+        >
+          {tab.label}
+        </button>
+      ))}
     </div>
   );
 }
