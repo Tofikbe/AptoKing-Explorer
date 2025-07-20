@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { useAutoFetch } from './hooks/useAutoFetch';
 
 const cgUrl = () =>
@@ -41,6 +41,12 @@ export default function App() {
     transform: (d) => d?.data,
   });
 
+  useEffect(() => {
+    console.log("CoinGecko Data:", cgData);
+    console.log("TVL Data:", tvlData);
+    console.log("Chain Data:", chainData);
+  }, [cgData, tvlData, chainData]);
+
   const aptPrice = cgData?.aptos?.usd;
   const aptMcap = cgData?.aptos?.usd_market_cap;
   const usdcPrice = cgData?.['usd-coin']?.usd;
@@ -65,21 +71,21 @@ export default function App() {
       )}
 
       <StatCard title="APT Token">
-        <p>Price (USD): <strong>{aptPrice != null ? `$${fmt(aptPrice, 4)}` : 'Loading…'}</strong></p>
-        <p>Market Cap: <strong>{aptMcap != null ? `$${fmt(aptMcap)}` : 'Loading…'}</strong></p>
+        <p>Price (USD): <strong>{aptPrice ? `$${fmt(aptPrice, 4)}` : 'Fetching…'}</strong></p>
+        <p>Market Cap: <strong>{aptMcap ? `$${fmt(aptMcap)}` : 'Fetching…'}</strong></p>
       </StatCard>
 
       <StatCard title="USDC Stablecoin">
-        <p>Price: <strong>{usdcPrice != null ? `$${fmt(usdcPrice, 4)}` : 'Loading…'}</strong></p>
+        <p>Price: <strong>{usdcPrice ? `$${fmt(usdcPrice, 4)}` : 'Fetching…'}</strong></p>
       </StatCard>
 
       <StatCard title="Total Value Locked (TVL)">
-        <p><strong>{tvl != null ? `$${fmt(tvl)}` : 'Loading…'}</strong></p>
+        <p><strong>{tvl ? `$${fmt(tvl)}` : 'Fetching…'}</strong></p>
       </StatCard>
 
       <StatCard title="Chain Activity">
-        <p>Total User Transactions: <strong>{txCount != null ? fmt(txCount, 0) : 'Loading…'}</strong></p>
-        <p>Last Tx Timestamp: <strong>{lastChainTs ?? 'Loading…'}</strong></p>
+        <p>Total User Transactions: <strong>{txCount ? fmt(txCount, 0) : 'Fetching…'}</strong></p>
+        <p>Last Tx Timestamp: <strong>{lastChainTs ?? 'Fetching…'}</strong></p>
       </StatCard>
 
       <p style={{ marginTop: 40, fontSize: 12, opacity: 0.7, textAlign: 'center' }}>
