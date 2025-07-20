@@ -2,12 +2,12 @@ import React from "react";
 
 export default function Tabs({ activeTab, onTabChange }) {
   const tabs = [
-    { key: "price", label: "APT Price" },
-    { key: "tvl", label: "TVL" },
-    { key: "chain", label: "Chain Activity" },
-    { key: "ecosystem", label: "Projects" },
-    { key: "twitter", label: "Twitter" },
-  ];
+  { id: "price", label: "APT Price" },
+  { id: "tvl", label: "TVL" },
+  { id: "ecosystem", label: "Ecosystem Projects" },
+  { id: "twitter", label: "Twitter Feed" },
+  { id: "ai", label: "AI Agent" },
+];
 
   return (
     <div style={{ display: "flex", justifyContent: "center", margin: "20px 0" }}>
