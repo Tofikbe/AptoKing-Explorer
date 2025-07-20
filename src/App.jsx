@@ -1,6 +1,12 @@
 import React, { useState, useMemo, useEffect } from "react";
 import Tabs from "./components/Tabs";
 import { useAutoFetch } from "./hooks/useAutoFetch";
+import Tabs from "./components/Tabs";
+import AptosPrice from "./components/AptosPrice";
+import TVL from "./components/TVL";
+import EcosystemProjects from "./components/EcosystemProjects";
+import TwitterFeed from "./components/TwitterFeed";
+import AIAgent from "./components/AIAgent";
 
 // --- API URLs ---
 const cgUrl = () =>
