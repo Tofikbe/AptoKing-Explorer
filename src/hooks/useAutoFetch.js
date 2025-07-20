@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export function useAutoFetch(url, { intervalMs = 60000, requestInit = {}, transform } = {}) {
+export function useAutoFetch(url, { intervalMs = 60000, requestInit, transform } = {}) {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);
@@ -13,16 +13,17 @@ export function useAutoFetch(url, { intervalMs = 60000, requestInit = {}, transf
       setData(transform ? transform(json) : json);
       setLastUpdated(Date.now());
       setError(null);
-    } catch (e) {
-      setError(e.message);
+    } catch (err) {
+      setError(err.message);
+      console.error(err);
     }
   }
 
   useEffect(() => {
     fetchData();
-    const timer = setInterval(fetchData, intervalMs);
-    return () => clearInterval(timer);
-  }, [url, JSON.stringify(requestInit), intervalMs]);
+    const id = setInterval(fetchData, intervalMs);
+    return () => clearInterval(id);
+  }, [url]);
 
   return { data, error, lastUpdated };
 }
